@@ -69,7 +69,8 @@ SELECT
     gym.location as Lokacija
 FROM worker
 INNER JOIN gym
-    ON worker.gym_id = gym.id;
+    ON worker.gym_id = gym.id
+WHERE lower(gym.location) = 'ljesevo';
 
 -- Mustafa #4
 select
