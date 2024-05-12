@@ -103,7 +103,8 @@ lower(equipment.name) = 'bench';
 -- Jusuf #4
 SELECT
     COUNT(worker.id) as Workers,
-    gym.location as Lokacija
+    gym.location as Lokacija,
+    SUM(worker.salary) as Izdvojiti_novca
 FROM worker
 INNER JOIN gym
     ON worker.gym_id = gym.id
