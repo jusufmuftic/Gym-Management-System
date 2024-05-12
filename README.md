@@ -17,7 +17,7 @@ Ova baza podataka sistema upravljanja teretanom dizajnirana je za efikasno uprav
      
 4. **Worker**
 
-   - Čuva podatke o radnicima u teretani, uključujući njihove plate i uloge.
+   - Čuva podatke o radnicima u teretani, uključujući njihove plate i uloge. U sebi ima foreign key 'gym_id' koji ga povezuje sa tabelom gym one to many vezom, jer jedan worker moze da radi u samo jednoj teretani a jedna teretana moze da ima vise workers-a
      
 5. **Plan**
 
@@ -29,15 +29,19 @@ Ova baza podataka sistema upravljanja teretanom dizajnirana je za efikasno uprav
      
 7. **Gym_Trainer**
    
-   - Uspostavlja vezu između teretana i trenera.
+   - Uspostavlja vezu između teretana i trenera. Tabele Gym i Trainer su povezane many to many vezom jer jedan trener moze da radi u vise teretana a i u jednoj teretani moze da radi vise trenera.
      
 8. **Gym_Equipment**
 
-   - Povezuje lokacije teretane s dostupnom opremom i njihovim količinama.
+   - Povezuje lokacije teretane s dostupnom opremom i njihovim količinama. Tabele Gym i Equipment su povezane many to many vezom jer se jedna sprava moze nalaziti u vise teretana kao sto i jedna teretana moze imati vise sprava.
   
 9. **Members**
 
-   - Sadrži informacije o članovima teretane, uključujući njihove lične podatke, dodijeljene trenere, pretplatne planove i popuste.
+   - Sadrži informacije o članovima teretane, uključujući njihove lične podatke, dodijeljene trenere, pretplatne planove i popuste. Ima par foreign keys:'plan_id','trainer_id','subscription_id' koji je povezuju sa tabelama redom: plan, trainer, subscription one to many vezom. jedan member moze da ima samo jedan plan a jedan plan moze da ima vise member-a, jedan trener moze da vjezba vise membera ali jedan member moze da ima samo jednog trenera, jedan member moze da bude pretplacen na samo jedan subsctiption a vise membera moze da bude pretplaceno na jedan subscription.
+  
+# Inserts
+
+   - O insertima se nema reci nista specijalno, tu smo samo unijeli nekoliko nasumicnih primjera da provjerimo da li nam rade upiti.
 
 # Contributors
 
