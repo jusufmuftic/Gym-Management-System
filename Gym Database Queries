@@ -36,13 +36,14 @@ where
 
 -- Jusuf #2
 SELECT
-members.first_name as Member_name,
+    members.first_name as Member_name,
     members.last_name as Member_surname,
     members.gender as Member_gender,
-trainer.first_name as Member_trainer,
+    trainer.first_name as Member_trainer,
     trainer.gender as Trainer_gender
 FROM members
-INNER JOIN trainer ON members.trainer_id = trainer.id;
+INNER JOIN trainer
+    ON members.trainer_id = trainer.id;
 
 -- Mustafa #3
 SELECT first_name, members.gender, plan.plan_name FROM members
@@ -63,12 +64,12 @@ group by trainer_id;
 
 -- Jusuf #3
 SELECT
-first_name as Ime,
+    first_name as Ime,
     last_name as Prezime,
     gym.location as Lokacija
 FROM worker
 INNER JOIN gym
-ON worker.gym_id = gym.id;
+    ON worker.gym_id = gym.id;
 
 -- Mustafa #4
 select
@@ -100,11 +101,11 @@ lower(equipment.name) = 'bench';
 
 -- Jusuf #4
 SELECT
-COUNT(worker.id) as Workers,
+    COUNT(worker.id) as Workers,
     gym.location as Lokacija
 FROM worker
 INNER JOIN gym
-ON worker.gym_id = gym.id
+    ON worker.gym_id = gym.id
 GROUP BY gym.id;
 
 -- Mustafa #5
