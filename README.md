@@ -9,35 +9,35 @@ Ova baza podataka sistema upravljanja teretanom dizajnirana je za efikasno uprav
      
 2. **Subscription**
 
-   - Manages member subscriptions with details such as starting date, ending date, package type, and price.
+   - Upravlja članovskim pretplatama s detaljima poput datuma početka, datuma završetka, vrste paketa i cijene.
 
 3. **Gym**
 
-   - Contains information about gym locations.
+   - Sadrži informacije o lokacijama teretane.
      
 4. **Worker**
 
-   - Stores data about workers in the gym, including their salaries and roles.
+   - Čuva podatke o radnicima u teretani, uključujući njihove plate i uloge.
      
 5. **Plan**
 
-   - Manages different membership plans offered by the gym, including the plan name, price, and number of sessions.
+   - Upravlja različitim članstvenim planovima koje nudi teretana, uključujući naziv plana, cijenu i broj sesija.
      
 6. **Equipment**
 
-   - Stores details of gym equipment available for use.
+   - Čuva detalje o opremi u teretani dostupnoj za korištenje.
      
 7. **Gym_Trainer**
    
-   - Establishes a relationship between gyms and trainers.
+   - Uspostavlja vezu između teretana i trenera.
      
 8. **Gym_Equipment**
 
-   - Associates gym locations with available equipment and their quantities.
+   - Povezuje lokacije teretane s dostupnom opremom i njihovim količinama.
   
 9. **Members**
 
-   - Contains information about gym members, including their personal details, assigned trainers, subscription plans, and discounts.
+   - Sadrži informacije o članovima teretane, uključujući njihove lične podatke, dodijeljene trenere, pretplatne planove i popuste.
 
 # Contributors
 
