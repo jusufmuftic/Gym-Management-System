@@ -148,13 +148,13 @@ INSERT INTO gym (location) VALUES ('ljesevo');
 INSERT INTO gym (location) VALUES ('ilijas');
 INSERT INTO gym (location) VALUES ('jajce');
 
-INSERT INTO members (first_name, last_name, gender, email, phone_number, place, comm,date_of_birth, discount, plan_id) VALUES ('Mahir','Alijagic','male','mahir@gmail.com','061234432', 'porijecani', 'too loud','1975-08-26', 10, 1);
+INSERT INTO members (first_name, last_name, gender, email, phone_number, place, comm,date_of_birth, discount, plan_id) VALUES ('Mahir','Alijagic','male','mahir@gmail.com','061234432', 'porijecani', 'Policajac na sluzbi','1975-08-26', 10, 1);
 INSERT INTO members (first_name, last_name, gender, email, phone_number, place, date_of_birth, plan_id) VALUES ('Fahrija','Alijagic','female','fahrija@gmail.com','061222333','porijecani', '1954-12-07', 1);
 INSERT INTO members (first_name, last_name, gender, email, phone_number, place, comm, date_of_birth, plan_id) VALUES ('Mustafa','Alijagic','male','mustafaalijagic@gmail.com','064111675','porijecani', 'dirty shoes', '2008-07-21', 1);
 INSERT INTO members (first_name, last_name, gender, email, phone_number, place, date_of_birth, plan_id) VALUES ('Adha','Becic','female','adgaahmed@gmail.com','060765111','visoko', '2007-09-21', 3);
 INSERT INTO members (first_name, last_name, gender, email, phone_number, place, date_of_birth, plan_id) VALUES ('Mirelma','Becic','female','mirelma@gmail.com','0644295908','visoko', '2003-02-13', 3);
 INSERT INTO members (first_name, last_name, gender, email, phone_number, place, date_of_birth, plan_id) VALUES ('Naida','Suljic','female','Naida@gmail.com','9823631312','ljesevo', '2006-09-30', 2);
-INSERT INTO members (first_name, last_name, gender, email, phone_number, place, date_of_birth, discount, plan_id) VALUES ('Haris','Loncar','male','haris@gmail.com','2134554232','hogwarts', '2000-12-31', 10, 4);
+INSERT INTO members (first_name, last_name, gender, email, phone_number, place, date_of_birth, discount, plan_id) VALUES ('Haris','Loncar','male','haris@gmail.com','2134554232','Ratni vojni invalid', '2000-12-31', 10, 4);
 INSERT INTO members (first_name, last_name, gender, email, phone_number, place, comm, date_of_birth, plan_id) VALUES ('Asija','Mihaljevic','female','asija@gmail.com','3252563232','ljesevo','ripped gloves', '2005-05-30', 4);
 INSERT INTO members (first_name, last_name, gender, email, phone_number, place, comm, date_of_birth, plan_id) VALUES ('Rabija','Ibrisimovic','female','rabija@gmail.com','234235566','ilijas', 'breaking dumbells', '2005-04-21', 4);
 INSERT INTO members (first_name, last_name, gender, email, phone_number, place, comm, date_of_birth, plan_id) VALUES ('Rejhana','Dzavdan','female','rejhana@gmail.com','4489025902','ljesevo', 'had choopan', '2005-08-12', 5);
