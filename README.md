@@ -15,7 +15,7 @@ Ova baza podataka sistema upravljanja teretanom dizajnirana je za efikasno uprav
 
    - Sadrži informacije o lokacijama teretane.
      
-4. **Worker**
+4. **Worker/employes** CSV
 
    - Čuva podatke o radnicima u teretani, uključujući njihove plate i uloge. U sebi ima foreign key 'gym_id' koji ga povezuje sa tabelom gym one to many vezom, jer jedan worker moze da radi u samo jednoj teretani a jedna teretana moze da ima vise workers-a
      
