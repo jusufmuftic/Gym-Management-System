@@ -3,74 +3,14 @@ SELECT first_name, last_name, starting_date, ending_date FROM subscription
 INNER JOIN members ON subscription.id = members.id
 where is_active = false;
 
--- Ahmed #1
-SELECT first_name, last_name FROM members
-WHERE comm is null;
-
--- Jusuf #1
-SELECT
-concat(members.first_name," ", members.last_name) as Member,
-    comm as Komentar,
-    concat(discount, "%") as Discount
-FROM members WHERE discount > 0;
-
 -- Mustafa #2
 SELECT first_name, last_name, date_of_birth as punoljetni FROM members
 WHERE date_of_birth < '2004-01-01';
-
--- Ahmed #2
-select
-    members.first_name as Member_name,
-    members.last_name as Member_last_name,
-    gym.location
-from
-    members
-inner join trainer
-    on trainer.id = members.trainer_id
-inner join gym_trainer
-    on gym_trainer.trainer_id = trainer.id
-inner join gym
-    on gym.id = gym_trainer.gym_id
-where
-    lower(gym.location)='ilijas';
-
--- Jusuf #2
-SELECT
-    members.first_name as Member_name,
-    members.last_name as Member_surname,
-    members.gender as Member_gender,
-    trainer.first_name as Member_trainer,
-    trainer.gender as Trainer_gender
-FROM members
-INNER JOIN trainer
-    ON members.trainer_id = trainer.id;
 
 -- Mustafa #3
 SELECT first_name, members.gender, plan.plan_name FROM members
 INNER JOIN plan ON members.plan_id = plan.id
 WHERE members.gender = 'female' AND plan.plan_name = 'premium';
-
--- Ahmed #3
-select
-    concat_ws(" ",trainer.first_name,trainer.last_name) as trainer_name,
-    sum(plan.price) as zaradjuje
-from
-    trainer
-inner join members
-    on members.trainer_id = trainer.id
-inner join plan
-    on plan.id = members.plan_id
-group by trainer_id;
-
--- Jusuf #3
-SELECT
-    first_name as Ime,
-    last_name as Prezime,
-    gym.location as Lokacija
-FROM worker
-INNER JOIN gym
-    ON worker.gym_id = gym.id
-WHERE lower(gym.location) = 'ljesevo';
 
 -- Mustafa #4
 select
@@ -88,28 +28,6 @@ inner join gym
 group by 1
 order by 2 desc;
 
--- Ahmed #4
-select
-    gym.location,
-    equipment.name,
-    gym_equipment.quantity
-from
-    equipment
-inner join gym_equipment ON gym_equipment.equipment_id=equipment.id
-inner join gym on gym.id=gym_equipment.gym_id
-where gym_equipment.quantity>0 and
-lower(equipment.name) = 'bench';
-
--- Jusuf #4
-SELECT
-    COUNT(worker.id) as Workers,
-    gym.location as Lokacija,
-    SUM(worker.salary) as Izdvojiti_novca
-FROM worker
-INNER JOIN gym
-    ON worker.gym_id = gym.id
-GROUP BY gym.id;
-
 -- Mustafa #5
 select
     gym.location as lokacija,
@@ -121,6 +39,52 @@ inner join gym_equipment ON gym_equipment.equipment_id=equipment.id
 inner join gym on gym.id=gym_equipment.gym_id
 where gym_equipment.quantity>0 and
 lower(equipment.name) = 'tredmill';
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-- Ahmed #1
+SELECT first_name, last_name FROM members
+WHERE comm is null;
+
+-- Ahmed #2
+select
+    members.first_name as Member_name,
+    members.last_name as Member_last_name,
+    gym.location
+from
+    members
+inner join trainer
+    on trainer.id = members.trainer_id
+inner join gym_trainer
+    on gym_trainer.trainer_id = trainer.id
+inner join gym
+    on gym.id = gym_trainer.gym_id
+where
+    lower(gym.location)='ilijas';
+
+-- Ahmed #3
+select
+    concat_ws(" ",trainer.first_name,trainer.last_name) as trainer_name,
+    sum(plan.price) as zaradjuje
+from
+    trainer
+inner join members
+    on members.trainer_id = trainer.id
+inner join plan
+    on plan.id = members.plan_id
+group by trainer_id;
+
+-- Ahmed #4
+select
+    gym.location,
+    equipment.name,
+    gym_equipment.quantity
+from
+    equipment
+inner join gym_equipment ON gym_equipment.equipment_id=equipment.id
+inner join gym on gym.id=gym_equipment.gym_id
+where gym_equipment.quantity>0 and
+lower(equipment.name) = 'bench';
 
 -- Ahmed #5
 select
@@ -137,6 +101,46 @@ inner join gym
     on gym.id = gym_trainer.gym_id
 group by 1
 order by 2 desc;
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-- Jusuf #1
+SELECT
+concat(members.first_name," ", members.last_name) as Member,
+    comm as Komentar,
+    concat(discount, "%") as Discount
+FROM members WHERE discount > 0;
+
+-- Jusuf #2
+SELECT
+    members.first_name as Member_name,
+    members.last_name as Member_surname,
+    members.gender as Member_gender,
+    trainer.first_name as Member_trainer,
+    trainer.gender as Trainer_gender
+FROM members
+INNER JOIN trainer
+    ON members.trainer_id = trainer.id;
+
+-- Jusuf #3
+SELECT
+    first_name as Ime,
+    last_name as Prezime,
+    gym.location as Lokacija
+FROM worker
+INNER JOIN gym
+    ON worker.gym_id = gym.id
+WHERE lower(gym.location) = 'ljesevo';
+
+-- Jusuf #4
+SELECT
+    COUNT(worker.id) as Workers,
+    gym.location as Lokacija,
+    SUM(worker.salary) as Izdvojiti_novca
+FROM worker
+INNER JOIN gym
+    ON worker.gym_id = gym.id
+GROUP BY gym.id;
 
 -- Jusuf #5
 SELECT
