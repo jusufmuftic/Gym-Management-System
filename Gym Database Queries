@@ -1,3 +1,5 @@
+# QUERIES NE RADE VJV JER SAM MIJENJAO BAZU!!!!
+
 -- Mustafa #1
 SELECT first_name, last_name, starting_date, ending_date FROM subscription
 INNER JOIN members ON subscription.id = members.id
