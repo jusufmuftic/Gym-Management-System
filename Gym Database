@@ -1,19 +1,24 @@
--- Ovo koristite samo kada refreshate bazu. Ne treba vam prvi put.
-
+-- Ovo vam treba samo prvi put.
 /*
-drop table members;
+create database Gym;
+use Gym;
+*/
+
+-- Ovo koristite samo kada refreshate bazu. Ne treba vam prvi put.
+/*
 drop table gym_equipment;
 drop table gym_trainer;
+drop table subscription_members;
+drop table members;
 drop table subscription;
 drop table plan;
 drop table trainer;
-drop table worker;
+drop table employee;
 drop table gym;
 drop table equipment;
 */
 
-
-/*111111*/
+/*1*/
 create table trainer(
 id int primary key auto_increment,
     first_name varchar(50) NOT NULL,
@@ -22,7 +27,12 @@ id int primary key auto_increment,
     email varchar(50),
     phone_number varchar(50)
 );
-/*22222*/
+/*2*/
+create table gym(
+    id int primary key auto_increment,
+    location varchar(50) NOT NULL
+);
+/*3*/
 create table subscription(
     id int primary key auto_increment,
     starting_date datetime NOT NULL,
@@ -30,15 +40,14 @@ create table subscription(
     package_type varchar(20) NOT NULL,
     duration varchar(50),
     price int NOT NULL,
-    is_active bool NOT NULL
+    is_active bool NOT NULL,
+    gym_id int,
+    foreign key(gym_id)references gym(id)
+		on delete cascade
+        on update cascade
 );
-/*333333*/
-create table gym(
-    id int primary key auto_increment,
-    location varchar(50) NOT NULL
-);
-/*444444*/
-create table worker(
+/*4*/
+create table employee(
     id int primary key auto_increment,
     first_name varchar(50) NOT NULL,
     last_name varchar(50) NOT NULL,
@@ -50,20 +59,26 @@ create table worker(
     salary int,
     gym_id int,
     foreign key(gym_id)references gym(id)
+		on delete cascade
+        on update cascade
 );
-/*555555*/
+/*5*/
 create table plan(
     id int primary key auto_increment,
     plan_name varchar(50),
     price int,
-    sessions int
+    sessions int,
+    trainer_id int,
+    foreign key(trainer_id)references trainer(id)
+		on delete cascade
+        on update cascade
 );
-/*66666*/
+/*6*/
 create table equipment(
     id int primary key auto_increment,
     name varchar(50)
 );
-/*77777*/
+/*7*/
 create table gym_trainer(
     gym_id int,
     foreign key(gym_id) references gym(id)
@@ -74,7 +89,7 @@ create table gym_trainer(
         on delete cascade
         on update cascade
 );
-/*8888888*/
+/*8*/
 create table gym_equipment(
     equipment_id int,
     foreign key(equipment_id) references equipment(id)
@@ -86,7 +101,7 @@ create table gym_equipment(
         on update cascade,
     quantity int
 );
-/*9999999*/
+/*9*/
 create table members(
     id int primary key auto_increment,
     first_name varchar(50) NOT NULL,
@@ -98,35 +113,24 @@ create table members(
     comm longtext,
     date_of_birth date,
     discount int,
-    trainer_id int,
-    foreign key(trainer_id) references trainer(id)
-        on delete cascade
-        on update cascade,
     plan_id int,
     foreign key(plan_id) references plan(id)
         on delete cascade
-        on update cascade,
+        on update cascade
+);
+/*11*/
+create table subscription_members(
     subscription_id int,
     foreign key(subscription_id) references subscription(id)
+        on delete cascade
+        on update cascade,
+    members_id int,
+    foreign key(members_id) references members(id)
         on delete cascade
         on update cascade
 );
 
-
 -- -- -- -- -- -- --
-
-INSERT INTO subscription (starting_date, ending_date, package_type, duration, price, is_active) VALUES ('2024-11-9 23:00:00' , '2024-12-9 23:00:00' ,'family pack 2', '1 month', '70', true);
-INSERT INTO subscription (starting_date, ending_date, package_type, duration, price, is_active) VALUES ('2024-07-9 17:00:00' , '2024-08-9 17:00:00','family pack 3', '1 month', '100', true);
-INSERT INTO subscription (starting_date, ending_date, package_type, duration, price, is_active) VALUES ('2023-06-5 09:00:00' , '2023-05-5 09:00:00', '1 month','month', '40', false);
-INSERT INTO subscription (starting_date, ending_date, package_type, duration, price, is_active) VALUES ('2024-09-30 19:46:56' , '2024-11-30 19:46:56','solo bolo', '2 month', '70', true);
-INSERT INTO subscription (starting_date, ending_date, package_type, duration, price, is_active) VALUES ('2022-11-22 13:23:22' , '2022-12-22 13:23:22', '1 month','month', '40', false);
-INSERT INTO subscription (starting_date, ending_date, package_type, duration, price, is_active) VALUES ('2021-03-12 14:44:45' , '2021-06-12 14:44:45','solo bolo', '3 month', '110', false);
-INSERT INTO subscription (starting_date, ending_date, package_type, duration, price, is_active) VALUES ('2024-06-7 21:30:00' , '2024-07-7 21:30:00','solo bolo', '1 month', '40', true);
-
-INSERT INTO plan (plan_name, price, sessions) VALUES ('nema plana', 0, 0);
-INSERT INTO plan (plan_name, price, sessions) VALUES ('beginer', 100, 8);
-INSERT INTO plan (plan_name, price, sessions) VALUES ('intermediate',150, 12);
-INSERT INTO plan (plan_name, price, sessions) VALUES ('premium', 200, 20);
 
 INSERT INTO trainer (first_name, last_name, gender, email, phone_number) VALUES ('nema','trenera','-','-','-');
 INSERT INTO trainer (first_name, last_name, gender, email, phone_number) VALUES ('Mustafa','Gradisic','male','mustafa@gmail.com','061432567');
@@ -134,28 +138,32 @@ INSERT INTO trainer (first_name, last_name, gender, email, phone_number) VALUES 
 INSERT INTO trainer (first_name, last_name, gender, email, phone_number) VALUES ('Jusuf','Muftic','male','jusuf@gmail.com','062611992');
 INSERT INTO trainer (first_name, last_name, gender, email, phone_number) VALUES ('Amila','Telalovic','female','AmilaT@gmail.com','062561792');
 
-INSERT INTO members (first_name, last_name, gender, email, phone_number, place, comm,date_of_birth, discount, trainer_id, plan_id, subscription_id ) VALUES ('Mahir','Alijagic','male','mahir@gmail.com','061234432', 'porijecani', 'too loud','1975-08-26', 10,  4, 2, 1);
-INSERT INTO members (first_name, last_name, gender, email, phone_number, place, date_of_birth, trainer_id, plan_id, subscription_id) VALUES ('Fahrija','Alijagic','female','fahrija@gmail.com','061222333','porijecani', '1954-12-07', 4, 2, 1);
-INSERT INTO members (first_name, last_name, gender, email, phone_number, place, comm, date_of_birth, trainer_id, plan_id, subscription_id) VALUES ('Mustafa','Alijagic','male','mustafaalijagic@gmail.com','064111675','porijecani', 'dirty shoes', '2008-07-21', 4, 2, 1);
-INSERT INTO members (first_name, last_name, gender, email, phone_number, place, date_of_birth, trainer_id, plan_id, subscription_id) VALUES ('Adha','Becic','female','adgaahmed@gmail.com','060765111','visoko', '2007-09-21', 2, 1, 2);
-INSERT INTO members (first_name, last_name, gender, email, phone_number, place, date_of_birth, trainer_id, plan_id, subscription_id) VALUES ('Mirelma','Becic','female','mirelma@gmail.com','0644295908','visoko', '2003-02-13', 2, 1, 2);
-INSERT INTO members (first_name, last_name, gender, email, phone_number, place, date_of_birth, trainer_id, plan_id, subscription_id) VALUES ('Naida','Suljic','female','Naida@gmail.com','9823631312','ljesevo', '2006-09-30', 1, 3, 3);
-INSERT INTO members (first_name, last_name, gender, email, phone_number, place, date_of_birth, discount, trainer_id, plan_id, subscription_id) VALUES ('Haris','Loncar','male','haris@gmail.com','2134554232','hogwarts', '2000-12-31', 10, 3, 2, 4);
-INSERT INTO members (first_name, last_name, gender, email, phone_number, place, comm, date_of_birth, trainer_id, plan_id, subscription_id) VALUES ('Asija','Mihaljevic','female','asija@gmail.com','3252563232','ljesevo','ripped gloves', '2005-05-30', 3, 2, 5);
-INSERT INTO members (first_name, last_name, gender, email, phone_number, place, comm, date_of_birth, trainer_id, plan_id, subscription_id) VALUES ('Rabija','Ibrisimovic','female','rabija@gmail.com','234235566','ilijas', 'breaking dumbells', '2005-04-21', 1, 2, 6);
-INSERT INTO members (first_name, last_name, gender, email, phone_number, place, comm, date_of_birth, trainer_id, plan_id, subscription_id) VALUES ('Rejhana','Dzavdan','female','rejhana@gmail.com','4489025902','ljesevo', 'had choopan', '2005-08-12', 3, 2, 7);
+INSERT INTO plan (plan_name, price, sessions, trainer_id) VALUES ('nema plana', 0, 0, 1);
+INSERT INTO plan (plan_name, price, sessions, trainer_id) VALUES ('beginer', 100, 8, 2);
+INSERT INTO plan (plan_name, price, sessions, trainer_id) VALUES ('intermediate',150, 12, 3);
+INSERT INTO plan (plan_name, price, sessions, trainer_id) VALUES ('premium', 200, 20, 4);
+INSERT INTO plan (plan_name, price, sessions, trainer_id) VALUES ('za zene', 200, 20, 5);
 
 INSERT INTO gym (location) VALUES ('ljesevo');
 INSERT INTO gym (location) VALUES ('ilijas');
 INSERT INTO gym (location) VALUES ('jajce');
 
+INSERT INTO members (first_name, last_name, gender, email, phone_number, place, comm,date_of_birth, discount, plan_id) VALUES ('Mahir','Alijagic','male','mahir@gmail.com','061234432', 'porijecani', 'too loud','1975-08-26', 10, 1);
+INSERT INTO members (first_name, last_name, gender, email, phone_number, place, date_of_birth, plan_id) VALUES ('Fahrija','Alijagic','female','fahrija@gmail.com','061222333','porijecani', '1954-12-07', 1);
+INSERT INTO members (first_name, last_name, gender, email, phone_number, place, comm, date_of_birth, plan_id) VALUES ('Mustafa','Alijagic','male','mustafaalijagic@gmail.com','064111675','porijecani', 'dirty shoes', '2008-07-21', 1);
+INSERT INTO members (first_name, last_name, gender, email, phone_number, place, date_of_birth, plan_id) VALUES ('Adha','Becic','female','adgaahmed@gmail.com','060765111','visoko', '2007-09-21', 3);
+INSERT INTO members (first_name, last_name, gender, email, phone_number, place, date_of_birth, plan_id) VALUES ('Mirelma','Becic','female','mirelma@gmail.com','0644295908','visoko', '2003-02-13', 3);
+INSERT INTO members (first_name, last_name, gender, email, phone_number, place, date_of_birth, plan_id) VALUES ('Naida','Suljic','female','Naida@gmail.com','9823631312','ljesevo', '2006-09-30', 2);
+INSERT INTO members (first_name, last_name, gender, email, phone_number, place, date_of_birth, discount, plan_id) VALUES ('Haris','Loncar','male','haris@gmail.com','2134554232','hogwarts', '2000-12-31', 10, 4);
+INSERT INTO members (first_name, last_name, gender, email, phone_number, place, comm, date_of_birth, plan_id) VALUES ('Asija','Mihaljevic','female','asija@gmail.com','3252563232','ljesevo','ripped gloves', '2005-05-30', 4);
+INSERT INTO members (first_name, last_name, gender, email, phone_number, place, comm, date_of_birth, plan_id) VALUES ('Rabija','Ibrisimovic','female','rabija@gmail.com','234235566','ilijas', 'breaking dumbells', '2005-04-21', 4);
+INSERT INTO members (first_name, last_name, gender, email, phone_number, place, comm, date_of_birth, plan_id) VALUES ('Rejhana','Dzavdan','female','rejhana@gmail.com','4489025902','ljesevo', 'had choopan', '2005-08-12', 5);
 
 INSERT INTO equipment (name) VALUES ('bench');
 INSERT INTO equipment (name) VALUES ('tredmill');
 INSERT INTO equipment (name) VALUES ('cable flies');
 INSERT INTO equipment (name) VALUES ('pullup bar');
 INSERT INTO equipment (name) VALUES ('smith machine');
-
 
 INSERT INTO gym_equipment (equipment_id,gym_id, quantity) VALUES (3,1,20);
 INSERT INTO gym_equipment (equipment_id,gym_id, quantity) VALUES (2,2,10);
@@ -168,11 +176,30 @@ INSERT INTO gym_trainer (gym_id, trainer_id) VALUES (2,1);
 INSERT INTO gym_trainer (gym_id, trainer_id) VALUES (3,3);
 INSERT INTO gym_trainer (gym_id, trainer_id) VALUES (3,4);
 
-INSERT INTO worker (first_name, last_name, username, pass, email, gender, phone_number, salary, gym_id) VALUES ('Said', 'Salihefendic', 'Dovah-Kinn', 'boing747', 'said123@gmail.com', 'male', '061-123/456', '10.000', 3);
-INSERT INTO worker (first_name, last_name, username, pass, email, gender, phone_number, salary, gym_id) VALUES ('Semin', 'Mamela', 'Selmine', 'latinski123', 'selmin@gmail.com', 'male', '061-789/123', '15.25', 1);
-INSERT INTO worker (first_name, last_name, username, pass, email, gender, phone_number, salary, gym_id) VALUES ('Emin', 'Basic', 'Matematicar', 'passatTD', 'emin@gmail.com', 'male', '061-654/321', '1.500', 2);
-INSERT INTO worker (first_name, last_name, username, pass, email, gender, phone_number, salary, gym_id) VALUES ('Lydia', 'Skyrim', 'character', 'sidecharacter', 'lydia@gmail.com', 'female', '061-123/456', '10.00', 3);
-INSERT INTO worker (first_name, last_name, username, pass, email, gender, phone_number, salary, gym_id) VALUES ('Amar', 'Mahmutovic', 'Prof. tizoa', 'breza123', 'amar@gmail.com', 'male', '061-123/456', '1000.00', 1);
-INSERT INTO worker (first_name, last_name, username, pass, email, gender, phone_number, salary, gym_id) VALUES ('Sabahudina', 'Mahmutovic', 'Prof. tjelesnog', 'breza321', 'sabahudina@gmail.com', 'female', '061-123/456', '1000.00', 1);
-INSERT INTO worker (first_name, last_name, username, pass, email, gender, phone_number, salary, gym_id) VALUES ('Sabrija', 'Muftic', 'domar', 'portirnica', 'sabrija@gmail.com', 'male', '061-123/456', '11.50', 2);
-INSERT INTO worker (first_name, last_name, username, pass, email, gender, phone_number, salary, gym_id) VALUES ('Sajjan', 'Rabari', 'boxer', 'internat', 'sajjan@gmail.com', 'male', '061-123/456', '1.00', 2);
+INSERT INTO subscription (starting_date, ending_date, package_type, duration, price, is_active,gym_id) VALUES ('2024-11-9 23:00:00' , '2024-12-9 23:00:00' ,'family pack 2', '1 month', '70', true,2);
+INSERT INTO subscription (starting_date, ending_date, package_type, duration, price, is_active,gym_id) VALUES ('2024-07-9 17:00:00' , '2024-08-9 17:00:00','family pack 3', '1 month', '100', true,3);
+INSERT INTO subscription (starting_date, ending_date, package_type, duration, price, is_active,gym_id) VALUES ('2023-06-5 09:00:00' , '2023-05-5 09:00:00', 'solo bolo','month', '40', false,1);
+INSERT INTO subscription (starting_date, ending_date, package_type, duration, price, is_active,gym_id) VALUES ('2024-09-30 19:46:56' , '2024-11-30 19:46:56','solo bolo', '2 month', '70', true,1);
+INSERT INTO subscription (starting_date, ending_date, package_type, duration, price, is_active,gym_id) VALUES ('2022-11-22 13:23:22' , '2022-12-22 13:23:22', 'solo bolo','month', '40', false,1);
+INSERT INTO subscription (starting_date, ending_date, package_type, duration, price, is_active,gym_id) VALUES ('2021-03-12 14:44:45' , '2021-06-12 14:44:45','solo bolo', '3 month', '110', false,2);
+INSERT INTO subscription (starting_date, ending_date, package_type, duration, price, is_active,gym_id) VALUES ('2024-06-7 21:30:00' , '2024-07-7 21:30:00','solo bolo', '1 month', '40', true,3);
+
+INSERT INTO employee (first_name, last_name, username, pass, email, gender, phone_number, salary, gym_id) VALUES ('Said', 'Salihefendic', 'Dovah-Kinn', 'boing747', 'said123@gmail.com', 'male', '061-123/456', '10.000', 3);
+INSERT INTO employee (first_name, last_name, username, pass, email, gender, phone_number, salary, gym_id) VALUES ('Semin', 'Mamela', 'Selmine', 'latinski123', 'selmin@gmail.com', 'male', '061-789/123', '15.25', 1);
+INSERT INTO employee (first_name, last_name, username, pass, email, gender, phone_number, salary, gym_id) VALUES ('Emin', 'Basic', 'Matematicar', 'passatTD', 'emin@gmail.com', 'male', '061-654/321', '1.500', 2);
+INSERT INTO employee (first_name, last_name, username, pass, email, gender, phone_number, salary, gym_id) VALUES ('Lydia', 'Skyrim', 'character', 'sidecharacter', 'lydia@gmail.com', 'female', '061-123/456', '10.00', 3);
+INSERT INTO employee (first_name, last_name, username, pass, email, gender, phone_number, salary, gym_id) VALUES ('Amar', 'Mahmutovic', 'Prof. tizoa', 'breza123', 'amar@gmail.com', 'male', '061-123/456', '1000.00', 1);
+INSERT INTO employee (first_name, last_name, username, pass, email, gender, phone_number, salary, gym_id) VALUES ('Sabahudina', 'Mahmutovic', 'Prof. tjelesnog', 'breza321', 'sabahudina@gmail.com', 'female', '061-123/456', '1000.00', 1);
+INSERT INTO employee (first_name, last_name, username, pass, email, gender, phone_number, salary, gym_id) VALUES ('Sabrija', 'Muftic', 'domar', 'portirnica', 'sabrija@gmail.com', 'male', '061-123/456', '11.50', 2);
+INSERT INTO employee (first_name, last_name, username, pass, email, gender, phone_number, salary, gym_id) VALUES ('Sajjan', 'Rabari', 'boxer', 'internat', 'sajjan@gmail.com', 'male', '061-123/456', '1.00', 2);
+
+INSERT INTO subscription_members(subscription_id,members_id) VALUES(2,1);
+INSERT INTO subscription_members(subscription_id,members_id) VALUES(2,2);
+INSERT INTO subscription_members(subscription_id,members_id) VALUES(2,3);
+INSERT INTO subscription_members(subscription_id,members_id) VALUES(1,4);
+INSERT INTO subscription_members(subscription_id,members_id) VALUES(1,5);
+INSERT INTO subscription_members(subscription_id,members_id) VALUES(3,6);
+INSERT INTO subscription_members(subscription_id,members_id) VALUES(4,7);
+INSERT INTO subscription_members(subscription_id,members_id) VALUES(5,8);
+INSERT INTO subscription_members(subscription_id,members_id) VALUES(6,9);
+INSERT INTO subscription_members(subscription_id,members_id) VALUES(7,10);
