@@ -1,3 +1,5 @@
+# AKO SE ODLUCIMO ZA OVO TREBA I README PROMIJENIT
+
 # Gym-Management-System
 
 Ova baza podataka sistema upravljanja teretanom dizajnirana je za efikasno upravljanje različitim aspektima teretane, uključujući pretplate za članove, trenere, opremu i osoblje.
